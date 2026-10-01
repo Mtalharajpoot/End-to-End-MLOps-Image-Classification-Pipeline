@@ -1,0 +1,9 @@
+.git
+.github
+data
+outputs
+tests
+notebooks
+assets
+**/__pycache__
+*.egg-info

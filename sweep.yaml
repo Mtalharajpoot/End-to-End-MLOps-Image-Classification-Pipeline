@@ -1,0 +1,30 @@
+# Weights & Biases hyper-parameter sweep:  wandb sweep sweeps/sweep.yaml && wandb agent <ID>
+program: src/visionops/train.py
+method: bayes
+metric:
+  name: val_acc
+  goal: maximize
+parameters:
+  lr:
+    distribution: log_uniform_values
+    min: 0.0001
+    max: 0.01
+  weight_decay:
+    distribution: log_uniform_values
+    min: 0.00001
+    max: 0.01
+  batch_size:
+    values: [64, 128, 256]
+  label_smoothing:
+    values: [0.0, 0.1]
+early_terminate:
+  type: hyperband
+  min_iter: 2
+command:
+  - ${env}
+  - python
+  - -m
+  - visionops.train
+  - --logger=wandb
+  - --max_epochs=8
+  - ${args}

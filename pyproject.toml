@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "visionops"
+version = "0.1.0"
+description = "Production-style image classification pipeline: PyTorch Lightning + timm, experiment tracking, ONNX export, Docker, CI."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+# Core = inference only (lean serving image: no torch needed).
+dependencies = [
+    "numpy",
+    "pillow",
+    "onnxruntime>=1.17",
+    "pyyaml>=6",
+]
+
+[project.optional-dependencies]
+train = [
+    "torch>=2.1",
+    "torchvision>=0.16",
+    "lightning>=2.2",
+    "torchmetrics>=1.3",
+    "timm>=0.9",
+    "onnx>=1.15",
+    "onnxscript",
+]
+tracking = ["wandb>=0.16"]
+app = ["streamlit>=1.30", "pandas"]
+dev = ["pytest", "ruff", "pre-commit", "pandas", "onnx>=1.15"]
+
+[project.scripts]
+visionops-train = "visionops.train:main"
+visionops-export = "visionops.export_onnx:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["notebooks"]  # demo notebook is not linted
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]

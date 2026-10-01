@@ -1,0 +1,12 @@
+# Default experiment: fine-tune a pretrained ResNet-18 on CIFAR-10 (runs on a free Colab T4).
+dataset: cifar10
+image_size: 64
+batch_size: 128
+backbone: resnet18
+pretrained: true
+lr: 0.001
+weight_decay: 0.0001
+label_smoothing: 0.1
+max_epochs: 5
+precision: 16-mixed
+logger: csv        # switch to "wandb" after `wandb login`

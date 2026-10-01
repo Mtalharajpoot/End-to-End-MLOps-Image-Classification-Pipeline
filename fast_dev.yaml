@@ -1,0 +1,10 @@
+# Tiny offline config used by CI / smoke tests (no downloads, CPU-friendly).
+dataset: fake
+image_size: 32
+batch_size: 32
+num_workers: 0
+backbone: resnet18
+pretrained: false
+max_epochs: 1
+precision: 32-true
+accelerator: cpu
